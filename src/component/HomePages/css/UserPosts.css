@@ -1,0 +1,11 @@
+#user_posters {
+  margin-top: 40px;
+}
+#user_posters .dd {
+  display: flex;
+  flex-wrap: wrap;
+}
+#user_posters .dd .postcards {
+  margin-top: 20px;
+  background-color: rgb(83, 54, 0);
+}/*# sourceMappingURL=UserPosts.css.map */

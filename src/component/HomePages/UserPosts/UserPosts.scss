@@ -1,0 +1,12 @@
+#user_posters{
+    margin-top: 40px;
+    .dd{
+        display: flex;
+        flex-wrap: wrap;
+
+        .postcards{
+        margin-top: 20px;
+        background-color: rgb(83, 54, 0);
+        }
+    }
+}

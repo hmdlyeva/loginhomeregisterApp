@@ -10,7 +10,7 @@ const HomePage = () => {
 
   const isLogin = useSelector((state: RootState) => state.users.isLogin);
 console.log(isLogin);
-  return isLogin ? <Homepage /> : null;
+  return isLogin ? <Homepage id={""} name={""} /> : null;
 };
 
 export default HomePage;

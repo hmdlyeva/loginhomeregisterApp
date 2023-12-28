@@ -1,0 +1,28 @@
+#register_page {
+
+  background-image: url('https://cdnb.artstation.com/p/assets/images/images/047/517/381/original/inkpendude-portal-calm.gif?1647794880');
+
+  background-repeat: no-repeat;
+  background-position:bottom;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // border: 1px solid;
+  height: 729px;
+  .registerim_page {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 20px;
+    padding-bottom: 40px;
+  }
+  h1 {
+    // color: dodgerblue;
+  }
+  .submit_button{
+    // border-color: dodgerblue;
+    margin-top: 20px;
+    margin-left: 10px;
+  }
+}

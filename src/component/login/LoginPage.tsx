@@ -33,7 +33,7 @@ interface user {
 }
 
 const LoginPage = (props: user) => {
-  const [UsersData, setUsersData] = useState([]);     
+  const [UsersData, setUsersData] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -75,22 +75,24 @@ const LoginPage = (props: user) => {
         .required("Required"),
     }),
     onSubmit: (values) => {
-      axios
-        .post("http://localhost:5000/login", values)
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("token", res.data);
-        });
+      axios.post("http://localhost:5000/login", values).then((res) => {
+        console.log(res);
+        localStorage.setItem("token", JSON.stringify(res.data));
+      });
 
       // console.log(UsersData);
       let Find = UsersData.find(
         (elem: { password: string; username: string }) =>
           elem.password == values.password && elem.username == values.username
       );
+
       if (Find) {
+        // let FindingElem = UsersData.find((elem)=>elem.id == Find!.id)
         dispatch(login(true));
         alert("welcome user");
         navigate("/");
+        localStorage.setItem("loginUser", Find.username);
+        console.log(Find);
       } else {
         alert("user not found");
         // navigate("/register");
@@ -99,69 +101,71 @@ const LoginPage = (props: user) => {
   });
 
   return (
-    <div>
-      <h1 style={{ color: "black" }}>Login</h1>
+    <div id="register_page">
+      <div className="container registerim_page">
+        <h1 style={{ color: "black" }}>Login</h1>
 
-      <form onSubmit={formik.handleSubmit}>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <TextField
-              label="Username"
-              id="username"
-              name="username"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.username}
-            />
-            {formik.errors.username ? (
-              <div style={{ color: "red" }}>{formik.errors.username}</div>
-            ) : null}
-
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <OutlinedInput
-                id="password"
-                type={showPassword ? "text" : "password"}
+        <form onSubmit={formik.handleSubmit}>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                label="Username"
+                id="username"
+                name="username"
+                type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.password}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
+                value={formik.values.username}
               />
-            </FormControl>
-            {formik.errors.password ? (
-              <div style={{ color: "red" }}>{formik.errors.password}</div>
-            ) : null}
-          </div>
-        </Box>
+              {formik.errors.username ? (
+                <div style={{ color: "red" }}>{formik.errors.username}</div>
+              ) : null}
 
-        <Button
-          type="submit"
-          style={{ backgroundColor: "orange" }}
-          variant="contained"
-        >
-          Submit
-        </Button>
-      </form>
+              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+              {formik.errors.password ? (
+                <div style={{ color: "red" }}>{formik.errors.password}</div>
+              ) : null}
+            </div>
+          </Box>
+
+          <Button
+            type="submit"
+            style={{ marginTop:"10px", marginLeft:"10px" }}
+            variant="contained"
+          >
+            Submit
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

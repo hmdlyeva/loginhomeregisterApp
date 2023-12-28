@@ -1,0 +1,72 @@
+#profile_user_page {
+  .profile_user_page {
+    // background-color: black;
+    // color: white;
+    .hero_section {
+      background-color: black;
+      color: white;
+    }
+    .heroo_section {
+      display: flex;
+      padding-top: 100px;
+      //   border: 1px solid red;
+
+      .left_hero {
+        // border:1px solid red;
+        .circle_user_pp_image {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          border: 1px solid lightgray;
+        }
+        .user_details {
+          // border:1px solid red;
+
+          padding-left: 20px;
+          p {
+            width: 190px;
+            font-size: 18px;
+            // border:1px solid red;
+          }
+        }
+      }
+      .post_follow {
+        width: 100%;
+        // border:1px solid red;
+        .modal_profile{
+      
+        }
+        .post_followers_following {
+          // border:1px solid red;
+          display: flex;
+        //   gap: 50px;
+          justify-content: space-around;
+          .post_user_detail {
+            text-align: center;
+          }
+          .follower_user_detail {
+            text-align: center;
+          }
+          .following_user_detail {
+            text-align: center;
+          }
+        }
+      }
+    }
+    .users_posters {
+       
+    //   background-color: black;
+      padding-bottom: 605px;
+      .user_posters_login {
+        padding-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        .userinposterleri{
+            box-shadow: rgba(127, 127, 127, 0.35) 0px 5px 15px;
+        }
+      }
+    }
+  }
+}

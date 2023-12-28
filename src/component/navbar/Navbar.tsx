@@ -12,6 +12,23 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHouse,
+  faMagnifyingGlass,
+  faComments,
+  faSquarePlus,
+  faUser,
+  faArrowRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+
+import {
+  faHeart,
+  faComment,
+  faEnvelope,
+} from "@fortawesome/free-regular-svg-icons";
+import { useNavigate } from "react-router-dom";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -57,54 +74,112 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // type Props = {}
 
 const Navbar = ({ setinpValue }: any) => {
-//   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+  //   const [users, setUsers] = useState([]);
   // useEffect(() => {
   //   axios
   //     .get("https://userapideployda.onrender.com/users")
   //     .then((res) => setUsers(res.data));
   // }, []);
   return (
-    <Box sx={{ flexGrow: 1 }} style={{ backgroundColor: "black" }}>
+    <div
+      style={{
+        backgroundColor: "black",
+        position: "fixed",
+        width: "100%",
+        zIndex: "2",
+      }}
+    >
+      <Box sx={{ flexGrow: 1 }}>
         <div className="container">
-      <AppBar position="static" style={{ backgroundColor: "black" }}>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            >
-              Halu
-            </Typography>
-            {/* <Button variant="outlined" onClick={()=>{
+          <AppBar position="static" style={{ backgroundColor: "black" }}>
+            <Toolbar>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+              >
+                <p
+                  style={{ width: "42px" }}
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Halu
+                </p>
+              </Typography>
 
-                    }}>search</Button> */}
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-                onChange={(e) => {
-                  // console.log(e.target.value);
-                //   setinpValue(e.target.value);
-                }}
-              />
-            </Search>
-          </Toolbar>
-      </AppBar>
+              <div style={{ display: "flex", gap: "30px" }}>
+                <FontAwesomeIcon
+                  icon={faHouse}
+                  style={{ color: "#005eff", fontSize: "25px" }}
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ color: "#005eff", fontSize: "25px" }}
+                  onClick={() => {
+                    navigate("/searchpage");
+                  }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faComments}
+                  style={{ color: "#005eff", fontSize: "25px" }}
+                  onClick={() => {
+                    navigate("/directpage");
+                  }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faSquarePlus}
+                  style={{ color: "#005eff", fontSize: "25px" }}
+                  onClick={() => {
+                    navigate("/sendposterspage");
+                  }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faUser}
+                  style={{
+                    color: "#005eff",
+                    fontSize: "25px",
+                  }}
+                  onClick={() => {
+                    navigate("/profilepageuser");
+                  }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  style={{
+                    color: "#005eff",
+                    fontSize: "29px",
+                  }}
+                  onClick={() => {
+                    navigate("/notificationuserpage");
+                  }}
+                />
+
+                <FontAwesomeIcon
+                  icon={faArrowRightFromBracket}
+                  style={{ color: "#005eff", fontSize: "29px" }}
+                  onClick={() => {
+                    navigate("/login");
+                    localStorage.removeItem("loginUser");
+                    localStorage.removeItem("token");
+                  }}
+                />
+              </div>
+            </Toolbar>
+          </AppBar>
         </div>
-    </Box>
+      </Box>
+    </div>
   );
 };
 

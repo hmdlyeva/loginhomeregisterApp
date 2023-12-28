@@ -22,6 +22,8 @@ import * as Yup from "yup";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import './Register.scss'
 interface user {
   name: string;
   surname: string;
@@ -122,8 +124,10 @@ const navigate = useNavigate()
   });
 
   return (
-    <div>
-      <h1 style={{ color: "black" }}>Register</h1>
+    <div id="register_page">
+      <div className="container registerim_page">
+
+      <h1 >Register</h1>
       <form onSubmit={formik.handleSubmit}>
         <Box
           component="form"
@@ -135,6 +139,7 @@ const navigate = useNavigate()
         >
           <div>
             <TextField
+            className="textfield"
               label="Name"
               id="name"
               name="name"
@@ -148,6 +153,7 @@ const navigate = useNavigate()
             ) : null}
 
             <TextField
+             className="textfield"
               label="Surname"
               id="surname"
               name="surname"
@@ -163,6 +169,7 @@ const navigate = useNavigate()
           </div>
           <div>
             <TextField
+             className="textfield"
               label="Username"
               id="username"
               name="username"
@@ -178,6 +185,7 @@ const navigate = useNavigate()
             <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
+               className="textfield"
                 id="password"
                 type={showPassword ? "text" : "password"}
                 onChange={formik.handleChange}
@@ -204,6 +212,7 @@ const navigate = useNavigate()
           </div>
           <div>
             <TextField
+             className="textfield"
               label="Email"
               id="email"
               name="email"
@@ -217,6 +226,7 @@ const navigate = useNavigate()
             ) : null}
 
             <TextField
+             className="textfield"
               label="Number"
               id="number"
               name="number"
@@ -233,12 +243,14 @@ const navigate = useNavigate()
 
         <Button
           type="submit"
-          style={{ backgroundColor: "orange" }}
-          variant="contained"
+          variant="contained" 
+          className="submit_button"      
         >
           Submit
         </Button>
       </form>
+      </div>
+
     </div>
   );
 };

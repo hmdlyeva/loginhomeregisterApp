@@ -2,7 +2,6 @@ import "./UserPosts.scss";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-type Props = {};
 
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -21,8 +20,9 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-const UserPosts = (props: Props) => {
-    const navigate = useNavigate();
+type Props = {};
+
+const UserPostFollow = (props: Props) => {
   const [UsersData, setUsersData] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,7 +33,6 @@ const UserPosts = (props: Props) => {
   }, []);
 
   console.log(UsersData);
-
   interface Myposter {
     imgsrc: string;
     imgtitle: string;
@@ -46,18 +45,49 @@ const UserPosts = (props: Props) => {
   let loginolanUserinUsername = localStorage.getItem("loginUser");
   console.log(loginolanUserinUsername);
 
-  let newFilteredDatam = UsersData.filter((user:{username:string})=> user.username != loginolanUserinUsername)
+  let loginolanuserim = UsersData.find(
+    (user: { username: string }) => user.username == loginolanUserinUsername
+  );
+  console.log(loginolanuserim);
+
+  let userinMyFollowArrayi = loginolanuserim?.myfollow || [];
+  console.log(userinMyFollowArrayi);
+
+  let userinMyFollowArrayindakiIdler = userinMyFollowArrayi.map(
+    (user: { id: string }) => String(user.id)
+
+  );
+  console.log(userinMyFollowArrayindakiIdler);
+
+  let FindUsersById = UsersData.filter((user: { id: string }) =>
+  userinMyFollowArrayindakiIdler.includes(String(user.id))
+);
+console.log("FindUsersById:", FindUsersById);
+
+const navigate = useNavigate();
 
   return (
     <section id="user_posters">
-      <div className="container" style={{display:"flex", flexWrap:"wrap",justifyContent:"center"}}>
+      <div
+        className="container"
+        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      >
         {/* <div>
-                    <div className="circle_profile_page">{ }</div>
-                    <div>username</div>
-                </div> */}
+                  <div className="circle_profile_page">{ }</div>
+                  <div>username</div>
+              </div> */}
 
-        {newFilteredDatam.map((user) => (
-          <div key={user.id} className="posts-user-card dd" style={{display:"flex", flexWrap:"wrap",justifyContent:"center", gap:"20px"}}>
+        {FindUsersById.map((user) => (
+          <div
+            key={user.id}
+            className="posts-user-card dd"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "20px",
+            }}
+          >
             {user.myposter!.map((poster: Myposter, index: number) => (
               <>
                 <Card
@@ -66,10 +96,9 @@ const UserPosts = (props: Props) => {
                     backgroundColor: "black",
                     borderRadius: "10px",
                     color: "white",
-                    
                   }}
                   className="cardddim"
-
+                  
                   onClick={()=>{
                     navigate(`/detailuserpage/${user.username}`)
                   }}
@@ -77,18 +106,12 @@ const UserPosts = (props: Props) => {
                   <div
                     style={{
                       display: "flex",
-                     gap:"70px"
-                     
-                    }}
-                  >
-                   <div  style={{
-                      display: "flex",
                       gap: "10px",
                       paddingBottom: "10px",
                       padding: "10px",
-                    }}>
-
-                   <CardMedia
+                    }}
+                  >
+                    <CardMedia
                       sx={{
                         height: 60,
                         width: 60,
@@ -97,7 +120,6 @@ const UserPosts = (props: Props) => {
                       image={user.profileimg}
                       title="green iguana"
                     />
-
                     <Typography
                       gutterBottom
                       variant="h6"
@@ -106,12 +128,6 @@ const UserPosts = (props: Props) => {
                     >
                       {user.username}
                     </Typography>
-                   </div>
-    
-                   <Button style={{ height:"75px" }}>
-                       Follow
-                      </Button>
-
                   </div>
 
                   <CardMedia
@@ -160,41 +176,6 @@ const UserPosts = (props: Props) => {
                     </CardActions>
                   </div>
                 </Card>
-
-                {/* <Card key={index} sx={{ maxWidth: 1280 }} className="postcards">
-                  <CardContent style={{ display: "flex", gap: "10px" }}>
-                    <CardMedia
-                      sx={{
-                        height: 100,
-                        width: 100,
-                        borderRadius: "50%",
-                        border: "1px solid ",
-                      }}
-                      image={user.mystory.storyimage}
-                      title="post image"
-                    />
-
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      style={{ display: "flex", alignItems: "center" }}
-                    >
-                      {user.username}
-                    </Typography>
-                  </CardContent>
-                  <CardMedia
-                    sx={{ height: 900, width: 1200 }}
-                    image={poster.imgsrc}
-                    title="post image"
-                  />
-
-                  <CardActions>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {poster.imgtitle}
-                    </Typography>
-                  </CardActions>
-                </Card> */}
               </>
             ))}
           </div>
@@ -204,4 +185,4 @@ const UserPosts = (props: Props) => {
   );
 };
 
-export default UserPosts;
+export default UserPostFollow;

@@ -35,6 +35,24 @@ interface UserLogin {
   info: string;
 }
 
+interface follow{
+  id:string
+}
+interface Posters{
+  id:string,
+  imgsrc:string,
+  imgtitle:string
+}
+interface User {
+  id: string;
+  username: string;
+  profileimg: string;
+  // message: messageArr[];
+  menifollow: follow[]
+  myfollow:follow[],
+  myposter:Posters[]
+}
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -98,7 +116,7 @@ const ProfilePage = (props: UserLogin) => {
   const navigate = useNavigate();
   let loginUsername = localStorage.getItem("loginUser");
   // console.log(loginUsername);
-  const [UsersData, setUsersData] = useState([]);
+  const [UsersData, setUsersData] = useState<User[]>([]);
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((res) => {
       setUsersData(res.data);
@@ -110,26 +128,51 @@ const ProfilePage = (props: UserLogin) => {
   );
   const dispatch = useDispatch();
 
-  //   let loginUserFollwerArr = LoginUser.menifollow.map(
-  //     (user: { id: string }) => String(user.id)
-  //   );
-  // console.log(loginUserFollwerArr);
+  //////////////////////////////////////////////
 
-  // let findmenifollowarrdakiusersbyid = UsersData.filter((user:{id:string})=>
-  // loginUserFollwerArr.includes(String(user.id)))
+  let meniFollowArr: string[] = [];
 
-  // console.log(findmenifollowarrdakiusersbyid);
+  if (LoginUser) {
+    meniFollowArr = LoginUser.menifollow;
+    console.log(meniFollowArr);
+  }
 
-  // let loginUserPostArr = LoginUser.myposter.map((post) => post.id);
+    let loginUserFollwerArr = meniFollowArr.map(
+      (user: { id: string }) => String(user.id)
+    );
+  console.log(loginUserFollwerArr);
 
-  // let loginUserMyFollowArr = LoginUser!.myfollow.map((user: { id: string }) =>
-  //   String(user.id)
-  // );
+  let findmenifollowarrdakiusersbyid = UsersData.filter((user:{id:string})=>
+  loginUserFollwerArr.includes(String(user.id)))
 
-  // let findmyfollowarrdakiusersbyid = UsersData.filter((user: { id: string }) =>
-  //   loginUserMyFollowArr.includes(String(user.id))
-  // );
+  console.log(findmenifollowarrdakiusersbyid);
 
+
+  let myposterArr: string[] = [];
+
+  if (LoginUser) {
+    myposterArr = LoginUser.myposter;
+    console.log(myposterArr);
+  }
+
+  let myfollowArr: string[] = [];
+
+  if (LoginUser) {
+    myfollowArr = LoginUser.myfollow;
+    console.log(myfollowArr);
+  }
+
+  let loginUserPostArr = myposterArr.map((post) => post.id);
+
+  let loginUserMyFollowArr = myfollowArr.map((user: { id: string }) =>
+    String(user.id)
+  );
+
+  let findmyfollowarrdakiusersbyid = UsersData.filter((user: { id: string }) =>
+    loginUserMyFollowArr.includes(String(user.id))
+  );
+
+/////////////////////////////////////////
   return (
     <section id="profile_user_page">
       <Navbar />
@@ -155,13 +198,13 @@ const ProfilePage = (props: UserLogin) => {
                 <div className="post_follow">
                   <div className="post_followers_following">
                     <div className="post_user_detail">
-                      <h2>2</h2>
-                      {/* <h2>{loginUserPostArr.length}</h2> */}
+                      {/* <h2>3</h2> */}
+                      <h2>{loginUserPostArr.length}</h2>
                       <h2>Posts</h2>
                     </div>
                     <div className="follower_user_detail">
-                      <h2>1</h2>
-                      {/* <h2>{loginUserFollwerArr.length}</h2> */}
+                      {/* <h2>1</h2> */}
+                      <h2>{loginUserFollwerArr.length}</h2>
                       <h2 onClick={handleOpenFollowers}>Followers</h2>
 
                       <Modal
@@ -178,7 +221,7 @@ const ProfilePage = (props: UserLogin) => {
 
                       >
                        
-                     {/* {  findmenifollowarrdakiusersbyid.map(
+                     {  findmenifollowarrdakiusersbyid.map(
               (user: { username: string; profileimg: string; bio: string }) => {
                 return (
                        <Card
@@ -222,15 +265,15 @@ const ProfilePage = (props: UserLogin) => {
 
 );
 }
-)} */}
+)}
 
                        
                       </Box>
                     </Modal>
                     </div>
                     <div className="following_user_detail">
-                      <h2>1</h2>
-                      {/* <h2>{loginUserMyFollowArr.length}</h2> */}
+                      {/* <h2>1</h2> */}
+                      <h2>{loginUserMyFollowArr.length}</h2>
                       <h2 onClick={handleOpenFollowing}>Following</h2>
 
                       <Modal
@@ -245,7 +288,7 @@ const ProfilePage = (props: UserLogin) => {
                           noValidate
                           autoComplete="off"
                         >
-                          {/* {findmyfollowarrdakiusersbyid.map(
+                          {findmyfollowarrdakiusersbyid.map(
                             (user: {
                               username: string;
                               profileimg: string;
@@ -329,7 +372,7 @@ const ProfilePage = (props: UserLogin) => {
                                 </Card>
                               );
                             }
-                          )} */}
+                          )}
                         </Box>
                       </Modal>
                     </div>

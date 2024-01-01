@@ -18,9 +18,15 @@ type Props = {};
 interface messageArr {
   acceptedmessage: string;
 }
+interface User {
+  id: string;
+  username: string;
+  profileimg: string;
+  message: messageArr[];
+}
 
-const DrctUserList = (props: Props) => {
-  const [UserssData, setUserssData] = useState([]);
+const DrctUserList = () => {
+  const [UserssData, setUserssData] = useState<User[]>([]);
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((res) => {
       setUserssData(res.data);
@@ -29,77 +35,93 @@ const DrctUserList = (props: Props) => {
 
   let Mainusername = localStorage.getItem("loginUser");
 
-  let LoginOlanUser = UserssData.find((user) => user.username == Mainusername);
+  let LoginOlanUser = UserssData.find(
+    (user: { username: string }) =>
+      user.username == Mainusername
+  );
 
-//   let messagemArr = LoginOlanUser!.message;
+  let messagemArr: string[] = [];
 
-//   let messagemdeuserler = messagemArr.map((user) => user.id);
+  if (LoginOlanUser) {
+    messagemArr = LoginOlanUser.message;
+    console.log(messagemArr);
+  }
 
-//   let loginOlanUserinMessageArrayindakiUserler = UserssData.filter((user) =>
-//     messagemdeuserler.includes(user.id)
-//   );
+  let messagemdeuserler = messagemArr.map((user: { id: any }) => user.id);
+  console.log(messagemdeuserler);
 
+  let loginOlanUserinMessageArrayindakiUserler = UserssData.filter((user) =>
+    messagemdeuserler.includes(user.id)
+  );
 
-//  let acceptedmessajlar = LoginOlanUser.message.map((user)=>user.acceptedmessage)
+  let acceptedmessajlar = messagemArr.map(
+    (user: { acceptedmessage: any }) => user.acceptedmessage
+  );
 
-  //   console.log(loginOlanUserinMessageArrayindakiUserler);
+  console.log(loginOlanUserinMessageArrayindakiUserler);
 
   return (
     <section id="user_list">
       <div className="users_lists">
-
-        {/* {loginOlanUserinMessageArrayindakiUserler
+        {loginOlanUserinMessageArrayindakiUserler
           ? loginOlanUserinMessageArrayindakiUserler.map(
               (user: {
                 username: string;
                 profileimg: string;
                 message: messageArr[];
               }) => {
-                
-                  return (
-                    <Card
-                      sx={{
-                        maxWidth: "100%",
-                        display: "flex",
-                        padding: "20px",
-                        justifyContent: "space-between",
-                      }}
-                      key={user.username}
-                    >
-                      <div style={{ display: "flex", gap: "20px" }}>
-                        <CardMedia
-                          sx={{ height: 100, width: 100, borderRadius: 50 }}
-                          image={user.profileimg}
-                          title="users profileimg"
-                        />
+                return (
+                  <Card
+                    sx={{
+                      maxWidth: "100%",
+                      display: "flex",
+                      padding: "20px",
+                      justifyContent: "space-between",
+                    }}
+                    key={user.username}
+                  >
+                    <div style={{ display: "flex", gap: "20px" }}>
+                      <CardMedia
+                        sx={{ height: 100, width: 100, borderRadius: 50 }}
+                        image={user.profileimg}
+                        title="users profileimg"
+                      />
 
-                        <div style={{ paddingTop: "15px" }}>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {user.username}
-                          </Typography>
+                      <div style={{ paddingTop: "15px" }}>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {user.username}
+                        </Typography>
 
-                          <Typography variant="body2" color="text.secondary">
-                            {acceptedmessajlar}
-                          </Typography>
-                        </div>
+                        <Typography variant="body2" color="text.secondary">
+                          {acceptedmessajlar}
+                        </Typography>
                       </div>
+                    </div>
 
-                      <CardContent>
-                        <CardActions
+                    <CardContent>
+                      <CardActions
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                          border: "1px solid lightgray",
+                        }}
+                      >
+                        <Button
                           style={{
-                            width: "30px",
-                            height: "30px",
-                            borderRadius: "50%",
-                            border: "1px solid lightgray",
+                            paddingRight: "40px",
+                            backgroundColor: "inherit",
                           }}
                         >
-                          <Button style={{ paddingRight: "40px", backgroundColor:"inherit"}}>1</Button>
-                        </CardActions>
-                      </CardContent>
-                    </Card>
-                  );
-                })
-          : null} */}
+                          1
+                        </Button>
+                      </CardActions>
+                    </CardContent>
+                  </Card>
+                );
+              }
+            )
+          : null}
       </div>
     </section>
   );

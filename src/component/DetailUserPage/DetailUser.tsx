@@ -46,7 +46,7 @@ type Props = {};
 const DetailUser = (props: Props) => {
   let loginUsername = localStorage.getItem("loginUser");
   // console.log(loginUsername);
-  const [UsersData, setUsersData] = useState([]);
+  const [UsersData, setUsersData] = useState<UserLogin[]>([]);
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((res) => {
       setUsersData(res.data);
@@ -68,17 +68,50 @@ const DetailUser = (props: Props) => {
   );
 
   const dispatch = useDispatch();
-  // let loginUserPostArr = findDetailedUserbyUsername.myposter.map((post) => post.id);
-  //   let loginUserFollwerArr = findDetailedUserbyUsername.menifollow.map(
-  //     (menifollow) => menifollow.id
-  //   );
 
-  //   let loginUserMyFollowArr = LoginUser!.myfollow.map((myfollow) => myfollow.id);
-  //   console.log(loginUserMyFollowArr);
+  let myposterArr: string[] = [];
 
-  // let loginuserinmyfollowundakidetailuser = loginUserMyFollowArr.find((id)=>id == findDetailedUserbyUsername.id)
+  if (findDetailedUserbyUsername) {
+    myposterArr = findDetailedUserbyUsername.myposter;
+    console.log(myposterArr);
+  }
 
-  // console.log(loginuserinmyfollowundakidetailuser);
+  let loginUserPostArr = myposterArr.map((post) => post.id);
+
+  let meniFollowArr: string[] = [];
+
+  if (findDetailedUserbyUsername) {
+    meniFollowArr = findDetailedUserbyUsername.menifollow;
+    console.log(meniFollowArr);
+  }
+
+  let loginUserFollwerArr = meniFollowArr.map((menifollow) => menifollow.id);
+
+
+
+  let myfollowArr: string[] = [];
+
+  if (findDetailedUserbyUsername) {
+    myfollowArr = findDetailedUserbyUsername.myfollow;
+    console.log(myfollowArr);
+  }
+
+  let loginUserMyFollowArr = myfollowArr.map((myfollow) => myfollow.id);
+  console.log(loginUserMyFollowArr);
+
+
+  let LoginmyfollowArr: string[] = [];
+
+  if (LoginUser) {
+    LoginmyfollowArr = LoginUser.myfollow;
+    console.log(LoginmyfollowArr);
+  }
+
+  let loginuserinmyfollowundakidetailuser = LoginmyfollowArr.find(
+    (id) => id.id === findDetailedUserbyUsername.id
+  );
+
+  console.log(loginuserinmyfollowundakidetailuser);
   return (
     <section id="profile_user_page">
       <Navbar />
@@ -104,18 +137,18 @@ const DetailUser = (props: Props) => {
                 <div className="post_follow">
                   <div className="post_followers_following">
                     <div className="post_user_detail">
-                      <h2>2</h2>
-                      {/* <h2>{loginUserPostArr.length}</h2> */}
+                      {/* <h2>2</h2> */}
+                      <h2>{loginUserPostArr.length}</h2>
                       <h2>Posts</h2>
                     </div>
                     <div className="follower_user_detail">
-                      <h2>1</h2>
-                      {/* <h2>{loginUserFollwerArr.length}</h2> */}
+                      {/* <h2>1</h2> */}
+                      <h2>{loginUserFollwerArr.length}</h2>
                       <h2>Followers</h2>
                     </div>
                     <div className="following_user_detail">
-                      <h2>1</h2>
-                      {/* <h2>{loginUserMyFollowArr.length}</h2> */}
+                      {/* <h2>1</h2> */}
+                      <h2>{loginUserMyFollowArr.length}</h2>
                       <h2>Following</h2>
                     </div>
                   </div>
@@ -127,29 +160,27 @@ const DetailUser = (props: Props) => {
                       gap: "30px",
                     }}
                   >
-                    {/* {
-                    loginuserinmyfollowundakidetailuser? null :  */}
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-
-                        alert("are u sure?")
-                        if (LoginUser && findDetailedUserbyUsername) {
+                    {loginuserinmyfollowundakidetailuser ? null : (
+                      <Button
+                        variant="outlined"
+                        onClick={() => {
+                          alert("are u sure?");
+                          if (LoginUser && findDetailedUserbyUsername) {
                             dispatch(
                               updateMyFollow({
                                 userId: LoginUser.id,
                                 geden: findDetailedUserbyUsername.id,
                                 myfollow: {
-                                  id: findDetailedUserbyUsername.id
+                                  id: findDetailedUserbyUsername.id,
                                 },
-                            }) as any
-                          );
-                        }
-                      }}
-                    >
-                      Follow
-                    </Button>
-                    {/* } */}
+                              }) as any
+                            );
+                          }
+                        }}
+                      >
+                        Follow
+                      </Button>
+                    )}
 
                     <Button variant="outlined">message</Button>
                     <Button variant="outlined" startIcon={<DeleteIcon />}>

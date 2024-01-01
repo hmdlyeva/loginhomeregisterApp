@@ -20,6 +20,7 @@ export interface User {
   // isLogin:boolean;
   // ispublic: boolean;
   // ntfctncontent?:string,
+  message?:string
 }
 
 
